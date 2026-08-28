@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 from unittest.mock import patch
+
 import pandas as pd
 
 from finrl.meta.data_processors.processor_yahoofinance import YahooFinanceProcessor
@@ -47,7 +48,9 @@ class TestYahooFinanceProcessorScrapData(unittest.TestCase):
             }
         )
 
-        mock_fetch.side_effect = lambda stock_name, p1, p2: df_aapl if stock_name == "AAPL" else df_msft
+        mock_fetch.side_effect = lambda stock_name, p1, p2: (
+            df_aapl if stock_name == "AAPL" else df_msft
+        )
 
         result = self.processor.scrap_data(["AAPL", "MSFT"], "2020-01-01", "2020-01-03")
 
